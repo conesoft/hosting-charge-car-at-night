@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Charge Car At Night - Service": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
