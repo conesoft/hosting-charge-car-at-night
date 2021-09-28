@@ -2,6 +2,7 @@
 
 var configuration = new ConfigurationBuilder().AddJsonFile(Conesoft.Hosting.Host.GlobalSettings.Path).Build();
 var client = new ECarUpHttpClient(new HttpClient(), configuration);
+var wirepusher = configuration["wirepusher:url"];
 
 var runAt = TimeSpan.FromHours(22);
 var runFor = TimeSpan.FromHours(5);
@@ -25,27 +26,12 @@ async Task Run()
     if ((await client.State()).Length == 0)
     {
         await client.StartCharging(runFor);
-
-        var message = new
-        {
-            title = $"Charging started",
-            message = $"Charging at Plattenstrasse 5 in Burg started",
-            image_url = $"https://i.imgur.com/xP60kt7.png",
-            type = "Server"
-        };
-
-        await new HttpClient().GetAsync($@"https://wirepusher.com/send?id=mpgpt&title={message.title}&message={message.message}&type={message.type}&image_url={message.image_url}");
+        await Notify("Charging started", "Charging at Plattenstrasse 5 in Burg started", "https://i.imgur.com/xP60kt7.png", "Server");
     }
     else
     {
-        var message = new
-        {
-            title = $"Charging in progress",
-            message = $"Charging at Plattenstrasse 5 in Burg is in progress",
-            image_url = $"https://i.imgur.com/xP60kt7.png",
-            type = "Server"
-        };
-
-        await new HttpClient().GetAsync($@"https://wirepusher.com/send?id=mpgpt&title={message.title}&message={message.message}&type={message.type}&image_url={message.image_url}");
+        await Notify("Charging in progress", "Charging at Plattenstrasse 5 in Burg in progress", "https://i.imgur.com/xP60kt7.png", "Server");
     }
 };
+
+Task Notify(string title, string message, string imageUrl, string type) => new HttpClient().GetAsync(wirepusher + $@"title={title}&message={message}&type={type}&image_url={imageUrl}");
