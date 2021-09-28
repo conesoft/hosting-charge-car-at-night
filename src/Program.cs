@@ -1,5 +1,4 @@
 ﻿using EvState.HttpClients;
-using Microsoft.AspNetCore.Http.Extensions;
 
 var configuration = new ConfigurationBuilder().AddJsonFile(Conesoft.Hosting.Host.GlobalSettings.Path).Build();
 var client = new ECarUpHttpClient(new HttpClient(), configuration);
