@@ -31,7 +31,7 @@ async Task Run()
         {
             title = $"Charging started",
             message = $"Charging at Plattenstrasse 5 in Burg started",
-            image_url = $"https://i.imgur.com/OrOZqXt.jpg",
+            image_url = $"https://i.imgur.com/xP60kt7.png",
             type = "Server"
         };
 
